@@ -14,9 +14,13 @@
 	"dependencies": {
 		"@astrojs/cloudflare": "12.6.12",
 		"@astrojs/mdx": "4.3.13",
+		"@astrojs/react": "^5.0.7",
 		"@astrojs/rss": "4.0.14",
 		"@astrojs/sitemap": "3.6.1",
 		"astro": "5.16.9",
+		"react": "^19.2.7",
+		"react-dom": "^19.2.7",
+		"recharts": "^3.8.1",
 		"typescript": "5.9.3"
 	},
 	"devDependencies": {

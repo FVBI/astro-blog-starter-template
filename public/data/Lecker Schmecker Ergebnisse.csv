@@ -1,0 +1,135 @@
+Date;ID;Subject;Symbol;Brand;Price;Comment;AD;AN;Jo;Ju;Da;Ro;Fa;Fi;Guest;Average;Sum
+2025-03-20;1;Passierte Tomaten;A;Rewe Bio;;;3;7;7;;2;;5;3;;4,50;27
+2025-03-20;1;Passierte Tomaten;B;Aldi Bio;;;6;2;5;;7;;4;7;;5,17;31
+2025-03-20;1;Passierte Tomaten;C;Mutti;;;1;6;2;;4;;1;4;;3,00;18
+2025-03-20;1;Passierte Tomaten;D;Kings Crown;;;2;1;3;;1;;2;5;;2,33;14
+2025-03-20;1;Passierte Tomaten;E;Oro di Parma;;?;4;4;6;;5;;3;1;;3,83;23
+2025-03-20;1;Passierte Tomaten;F;Gusti;;;5;3;4;;3;;6;6;;4,50;27
+2025-03-20;1;Passierte Tomaten;G;Rapunzel;;;7;5;1;;6;;7;2;;4,67;28
+2025-03-20;1;Passierte Tomaten als Sauce;Herz;Kings Crown;;;3;3;3;;3;;7;3;;3,67;22
+2025-03-20;1;Passierte Tomaten als Sauce;Kleeblatt;Mutti;;;1;1;2;;1;;1;1;;1,17;7
+2025-03-20;1;Passierte Tomaten als Sauce;Sonne;Aldi Bio;;;7;7;6;;6;;6;7;;6,50;39
+2025-03-20;1;Passierte Tomaten als Sauce;Stern;Rewe Bio;;;5;4;7;;5;;4;5;;5,00;30
+2025-03-20;1;Passierte Tomaten als Sauce;Smiley;Rapunzel;;;6;6;5;;7;;5;6;;5,83;35
+2025-03-20;1;Passierte Tomaten als Sauce;Lupe;Oro di Parma;;?;4;5;4;;4;;2;4;;3,83;23
+2025-03-20;1;Passierte Tomaten als Sauce;Krone;Gusti;;;2;2;1;;2;;3;2;;2,00;12
+2025-04-28;2;Oliven;A;Rapunzel Grün;28,12 €;Nicht zuordbar;6;9;5;3;6;9;9;5;;6,50;52
+2025-04-28;2;Oliven;B;Aldi Bio Grün;13,27 €;Nicht zuordbar;4;6;2;6;1;1;7;7;;4,25;34
+2025-04-28;2;Oliven;C;Citres Verona Grün;25,31 €;Nicht zuordbar;8;10;6;4;4;7;2;10;;6,38;51
+2025-04-28;2;Oliven;D;Rewe Bio Grün;17,52 €;Nicht zuordbar;3;2;4;2;5;5;10;9;;5,00;40
+2025-04-28;2;Oliven;E;Citres Verona Schwarz;28,00 €;Nicht zuordbar;9;8;1;5;9;2;8;3;;5,63;45
+2025-04-28;2;Oliven;F;Kaufland Grün;12,60 €;Nicht zuordbar;1;1;7;8;8;3;5;2;;4,38;35
+2025-04-28;2;Oliven;G;Rewe Feine Welt Schwarz;18,44 €;Nicht zuordbar;2;7;10;7;10;8;6;8;;7,25;58
+2025-04-28;2;Oliven;H;La Selva Schwarz;21,65 €;Nicht zuordbar;5;4;8;9;7;10;1;1;;5,63;45
+2025-04-28;2;Oliven;I;Markt Schwarz;27,90 €;Nicht zuordbar;7;3;9;10;3;4;3;4;;5,38;43
+2025-04-28;2;Oliven;J;Rewe Feine Welt Grün;18,44 €;Nicht zuordbar;10;5;3;1;2;6;4;6;;4,63;37
+2025-04-28;2;Feta;A;Bio Verde;21,00 €;Nicht zuordbar;3;1;1;2;1;6;1;3;;2,25;18
+2025-04-28;2;Feta;B;Patros;19,93 €;Nicht zuordbar;1;2;2;1;2;2;6;6;;2,75;22
+2025-04-28;2;Feta;C;Ja!;7,56 €;Nicht zuordbar;8;8;6;8;8;7;8;8;;7,63;61
+2025-04-28;2;Feta;D;Kaufland;10,95 €;Nicht zuordbar;4;6;4;5;5;5;5;7;;5,13;41
+2025-04-28;2;Feta;E;Aldi Bio;13,95 €;Nicht zuordbar;2;3;5;4;7;8;2;2;;4,13;33
+2025-04-28;2;Feta;F;Salakis;21,06 €;Nicht zuordbar;6;5;3;3;6;4;3;1;;3,88;31
+2025-04-28;2;Feta;G;Kaufland Bio;9,95 €;Nicht zuordbar;7;7;8;7;3;3;4;5;;5,50;44
+2025-04-28;2;Feta;H;Aldi Bio;9,95 €;Nicht zuordbar;5;4;7;6;4;1;7;4;;4,75;38
+2025-05-20;3;Kartoffeln;1;Alians;;;6;4;4;3;2;3;2;4;3;3,50;31
+2025-05-20;3;Kartoffeln;2;Corelia;;;7;8;7;7;7;6;6;7;7;6,88;62
+2025-05-20;3;Kartoffeln;3;Annabelle;;;1;2;1;1;3;1;3;2;2;1,75;16
+2025-05-20;3;Kartoffeln;4;Belana;;;4;5;2;5;4;7;4;1;5;4,00;37
+2025-05-20;3;Kartoffeln;5;Laura;;;8;7;8;6;8;5;5;8;6;6,88;61
+2025-05-20;3;Kartoffeln;6;Sieglinde;;;3;3;5;4;5;4;7;5;4;4,50;40
+2025-05-20;3;Kartoffeln;7;Venezia;;;2;1;3;2;1;2;1;3;1;1,88;16
+2025-05-20;3;Kartoffeln;8;Leyla;;;5;6;6;8;6;8;8;6;8;6,63;61
+2025-05-20;3;Spezi;1;Paulaner;;;8;7;7;8;8;8;8;7;5;7,63;66
+2025-05-20;3;Spezi;2;Schwipp Schwapp;;;7;6;4;6;7;4;5;3;3;5,25;45
+2025-05-20;3;Spezi;3;Libella;;;6;2;6;4;6;6;7;6;8;5,38;51
+2025-05-20;3;Spezi;4;Mezzo Mix;;;4;3;2;3;2;2;6;5;2;3,38;29
+2025-05-20;3;Spezi;5;Spezi Retro;;;1;1;1;1;1;1;1;1;1;1,00;9
+2025-05-20;3;Spezi;6;Buttenheimer;;;2;5;8;2;3;5;3;4;4;4,00;36
+2025-05-20;3;Spezi;7;Afri Kola;;;3;4;3;7;5;3;2;2;6;3,63;35
+2025-05-20;3;Spezi;8;Krumbacher;;;5;8;5;5;4;7;4;8;7;5,75;53
+2025-06-26;4;Veggy Schnitzel;A;Rewe;9,95 €;;7;6;7;7;;6;4;6;;6,14;43
+2025-06-26;4;Veggy Schnitzel;B;Vemondo;11,90 €;;1;3;4;3;;2;1;4;;2,57;18
+2025-06-26;4;Veggy Schnitzel;D;Vegitarian Butcher;13,83 €;;2;2;6;1;;1;3;2;;2,43;17
+2025-06-26;4;Veggy Schnitzel;E;Valess;15,56 €;;6;7;3;5;;5;7;7;;5,71;40
+2025-06-26;4;Veggy Schnitzel;G;Rügenwalder Mühle;21,60 €;;3;1;1;6;;3;2;1;;2,43;17
+2025-06-26;4;Veggy Schnitzel;H;My Day;12,90 €;;4;4;5;2;;7;5;3;;4,29;30
+2025-06-26;4;Veggy Schnitzel;Q;Like Meat;18,28 €;;5;5;2;4;;4;6;5;;4,43;31
+2025-06-26;4;Helles Bier;A;Bayreuther;1,09 €;;9;10;5;8;;9;6;8;;7,86;55
+2025-06-26;4;Helles Bier;B;Schanzenbräu;1,09 €;;6;7;2;2;;8;3;7;;5,00;35
+2025-06-26;4;Helles Bier;C;Mönchshof;0,96 €;;2;9;8;9;;4;7;9;;6,86;48
+2025-06-26;4;Helles Bier;D;Zirndorfer;0,94 €;;10;8;10;10;;10;10;10;;9,71;68
+2025-06-26;4;Helles Bier;E;Patrizier?;0,59 €;;5;5;9;7;;6;9;4;;6,43;45
+2025-06-26;4;Helles Bier;F;Augustiner;1,04 €;;3;3;6;4;;3;4;1;;3,43;24
+2025-06-26;4;Helles Bier;G;Tegernseer;;;4;2;3;5;;2;8;3;;3,86;27
+2025-06-26;4;Helles Bier;H;Weller 3x11;0,98 €;;8;4;4;3;;5;2;6;;4,57;32
+2025-06-26;4;Helles Bier;I;5.0;0,69 €;;7;6;7;7;;7;5;5;;6,29;44
+2025-06-26;4;Helles Bier;J;Öttinger;0,62 €;;1;1;1;1;;1;1;2;;1,14;8
+2025-07-14;5;Balsamico;;;;;;;;;;;;;;;0
+2025-08-14;6;Käse;A;Pecorino (Italien);21,40 €;;4;1;1;1;5;3;1;1;;2,13;17
+2025-08-14;6;Käse;B;Old Amsterdam;28,90 €;;1;3;2;4;2;4;3;2;;2,63;21
+2025-08-14;6;Käse;C;Bergbauernkäse (Aldi Bio);13,96 €;;6;6;8;5;4;5;5;6;;5,63;45
+2025-08-14;6;Käse;D;Le Giuyére (Kaufland Theke);29,90 €;;3;4;6;3;1;1;2;3;;2,88;23
+2025-08-14;6;Käse;E;Manchego (Kaufland Theke);36,90 €;;2;2;4;2;3;2;4;5;;3,00;24
+2025-08-14;6;Käse;F;Monbier (Kaufland Theke);26,90 €;;5;5;3;6;6;6;6;4;;5,13;41
+2025-08-14;6;Käse;G;Gouda (Aldi Bio);13,49 €;;8;7;5;8;7;7;7;7;;7,00;56
+2025-08-14;6;Käse;H;Emmentaler (Aldi Bio);13,45 €;;7;8;7;7;8;8;8;8;;7,63;61
+2025-08-14;6;Weißwein;1;Scheurebe;2,59 €;Nicht so sicher;8;7;7;6;8;;8;6;;7,14;50
+2025-08-14;6;Weißwein;2;Grüner Veltiner;4,99 €;Nicht so sicher;9;10;8;9;9;;7;9;;8,71;61
+2025-08-14;6;Weißwein;3;Pino Grigio;3,99 €;Nicht so sicher;10;8;2;7;10;;6;8;;7,29;51
+2025-08-14;6;Weißwein;4;Riesling;6,99 €;Nicht so sicher;7;2;1;5;4;;3;2;;3,43;24
+2025-08-14;6;Weißwein;5;Müller Thurgau;2,39 €;Nicht so sicher;5;4;4;10;6;;2;4;;5,00;35
+2025-08-14;6;Weißwein;6;Lugana;15,50 €;Nicht so sicher;3;6;10;1;1;;1;1;;3,29;23
+2025-08-14;6;Weißwein;7;Grauburgunder;3,59 €;Nicht so sicher;4;5;5;2;5;;5;5;;4,43;31
+2025-08-14;6;Weißwein;8;Lugana;7,99 €;Nicht so sicher;2;3;6;4;2;;9;7;;4,71;33
+2025-08-14;6;Weißwein;9;Riesling-Chardonnay;2,57 €;Nicht so sicher;1;1;2;3;3;;4;3;;2,43;17
+2025-08-14;6;Weißwein;10;Fiori del Sud;3,79 €;Nicht so sicher;6;9;9;8;7;;10;10;;8,43;59
+2025-01-09;7;Senf;1;Händlmeier;1,59 €;;6;7;5;;;7;5;6;;6,00;36
+2025-01-09;7;Senf;2;Kühne;1,89 €;;7;6;4;;;6;3;4;;5,00;30
+2025-01-09;7;Senf;3;Gut&Günstig;0,59 €;;5;5;6;;;5;7;5;;5,50;33
+2025-01-09;7;Senf;4;Develey;1,39 €;;3;3;3;;;4;1;2;;2,67;16
+2025-01-09;7;Senf;5;Thomy;1,49 €;;4;4;1;;;1;4;1;;2,50;15
+2025-01-09;7;Senf;6;Bautzner;1,39 €;;2;2;2;;;2;2;3;;2,17;13
+2025-01-09;7;Senf;7;Maille;3,49 €;;1;1;7;;;3;6;7;;4,17;25
+2025-01-09;7;Veggy Würste;A;My Vay;1,99 €;;5;6;4;;;6;5;3;;4,83;29
+2025-01-09;7;Veggy Würste;B;Wiesenhof Bruzzler;2,39 €;;6;7;1;;;7;4;6;;5,17;31
+2025-01-09;7;Veggy Würste;C;Rügenwalder Mühle Bratwürste;3,66 €;;1;1;6;;;1;6;5;;3,33;20
+2025-01-09;7;Veggy Würste;D;Feel Good;1,99 €;;4;5;7;;;3;2;2;;3,83;23
+2025-01-09;7;Veggy Würste;E;Rügenwalder Mühle Rostbratwürstchen;3,66 €;;2;2;5;;;4;3;7;;3,83;23
+2025-01-09;7;Veggy Würste;F;Vemondo;1,99 €;;3;4;2;;;2;1;1;;2,17;13
+2025-01-09;7;Veggy Würste;G;Billie Green Krakauer;3,66 €;;7;3;3;;;5;7;4;;4,83;29
+2025-11-17;8;Glühwein;;;;;;;;;;;;;;;0
+2025-12-15;9;Leitungswasser;A;Robin;;;4;1;1;3;2;1;1;;;1,86;13
+2025-12-15;9;Leitungswasser;B;Johanna;;;5;6;5;1;1;3;2;;;3,29;23
+2025-12-15;9;Leitungswasser;C;Fabi;;;7;7;7;7;5;7;6;;;6,57;46
+2025-12-15;9;Leitungswasser;D;Daniel;;;3;4;6;4;6;4;4;;;4,43;31
+2025-12-15;9;Leitungswasser;E;Andi Nano;;;2;3;3;6;7;5;7;;;4,71;33
+2025-12-15;9;Leitungswasser;F;Andi;;;1;2;2;2;3;2;3;;;2,14;15
+2025-12-15;9;Leitungswasser;G;Julia;;;6;5;4;5;4;6;5;;;5,00;35
+2025-12-15;9;Chips;A;;;;;;;;;;;;;;0
+2025-12-15;9;Chips;B;;;;;;;;;;;;;;0
+2025-12-15;9;Chips;C;;;;;;;;;;;;;;0
+2025-12-15;9;Chips;D;;;;;;;;;;;;;;0
+2025-12-15;9;Chips;E;;;;;;;;;;;;;;0
+2025-12-15;9;Chips;F;;;;;;;;;;;;;;0
+2025-12-15;9;Chips;G;;;;;;;;;;;;;;0
+2025-12-15;9;Chips;H;;;;;;;;;;;;;;0
+2026-01-19;10;Pfeffer;;;;;;;;;;;;;;;0
+2026-01-19;10;Pfeffer;;;;;;;;;;;;;;;0
+2026-01-19;10;Pfeffer;;;;;;;;;;;;;;;0
+2026-01-19;10;Pfeffer;;;;;;;;;;;;;;;0
+2026-01-19;10;Pfeffer;;;;;;;;;;;;;;;0
+2026-01-19;10;Pfeffer;;;;;;;;;;;;;;;0
+2026-01-19;10;Pfeffer;;;;;;;;;;;;;;;0
+;11;Honig;;;;;;;;;;;;;;;0
+;;;;;;;;;;;;;;;;;0
+;12;Frischkäse;;;;;;;;;;;;;;;0
+;;;;;;;;;;;;;;;;;0
+;13;Parmesan;;;;;;;;;;;;;;;0
+;;;;;;;;;;;;;;;;;0
+2026-05-19;14;Räuchertofu;1;Vegani Ebl;10,37 €;;5;6;6;5;;5;5;4;5;5,14;41
+2026-05-19;14;Räuchertofu;2;Taifun;14,90 €;;1;2;1;1;;1;1;1;2;1,14;10
+2026-05-19;14;Räuchertofu;3;Sojafarm;11,92 €;;2;4;5;3;;3;3;2;3;3,14;25
+2026-05-19;14;Räuchertofu;4;Vemondo;6,54 €;;6;5;4;6;;6;6;6;6;5,57;45
+2026-05-19;14;Räuchertofu;5;Aldi;6,36 €;;3;1;3;2;;2;4;3;4;2,57;22
+2026-05-19;14;Räuchertofu;6;Berief;9,40 €;;4;3;2;4;;4;2;5;1;3,43;25
+;;;;;;;;;;;;;;;;;0

@@ -2,13 +2,59 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { Picture } from 'astro:assets';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+
+const latest = (await getCollection('blog'))
+	.filter(p => !p.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
 ---
 
 <!doctype html>
 <html lang="de">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.featured {
+				margin-top: 2rem;
+			}
+			.featured a {
+				display: block;
+				text-decoration: none;
+				color: inherit;
+				text-align: center;
+			}
+			.featured img {
+				width: min(100%, 480px);
+				aspect-ratio: 210 / 297;
+				object-fit: cover;
+				object-position: center;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+				margin: 0 auto 0.5rem;
+			}
+			.featured-label {
+				font-size: 0.85rem;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: rgb(var(--gray));
+				margin-bottom: 0.5rem;
+			}
+			.featured h2 {
+				margin: 0 0 0.5rem 0;
+				font-size: 2.1rem;
+				line-height: 1.2;
+			}
+			.featured a:hover h2 {
+				color: var(--accent);
+			}
+			.featured .date {
+				color: rgb(var(--gray));
+				font-size: 0.9rem;
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
@@ -22,7 +68,25 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				klassischen Weinprobe über den besten Honig bis zur Frage, welche passierten Tomaten am besten
 				zum Lieblingsnudelgericht passen.
 			</p>
-			<p>Denn nur wer weiß, was wie schmeckt, weiß, was schmeckt.</p>
+
+			<p>
+				Denn nur wer weiß, was wie schmeckt, weiß, was schmeckt. <a href="/about">Mehr dazu.</a>
+			</p>
+
+			{latest && (
+				<div class="featured">
+					<p class="featured-label">Letztes Lecker Schmecker:</p>
+					<a href={`/tastings/${latest.id}/`}>
+						<Picture src={latest.data.heroImage ?? ''} formats={['avif', 'webp']} alt="" width={420} height={594} loading="eager" fetchpriority="high" />
+						<h2>{latest.data.title}</h2>
+						<p class="date"><FormattedDate date={latest.data.pubDate} /></p>
+					</a>
+				</div>
+			)}
+
+			<p>
+				Alle vergangenen Lecker Schmecker findest du <a href="/tastings">hier.</a>
+			</p>
 		</main>
 		<Footer />
 	</body>

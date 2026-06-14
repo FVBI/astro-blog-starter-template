@@ -94,7 +94,11 @@ const calculateRaterDeviation = (rawData, raters) => {
       Deviation: parseFloat((deviations.reduce((a, v) => a + v, 0) / deviations.length).toFixed(2)),
       fill: PALETTE[idx % PALETTE.length],
     }))
-    .sort((a, b) => a.Rater.localeCompare(b.Rater));
+    .sort((a, b) => {
+      if (a.Rater === 'Guest') return 1;
+      if (b.Rater === 'Guest') return -1;
+      return a.Rater.localeCompare(b.Rater);
+    });
 };
 
 const computeBoxStats = (rawData, raters, brandOrder) => {
@@ -157,18 +161,25 @@ const useTastingData = (subject) => {
   return state;
 };
 
+// Estimate XAxis height from the longest label (~7px per character at 12px font)
+const xAxisHeight = (items, key) => {
+  if (!items.length) return 120;
+  const longest = Math.max(...items.map(d => String(d[key] ?? '').length));
+  return Math.max(longest * 7, 60);
+};
+
 // --- Internal chart renderers ---
 
 const BarChartSum = ({ data }) => (
   <div className="chart-container">
-    <h3>Gesamtpunkte pro Marke</h3>
+    <h3>Gesamtpunkte pro Produkt (kleiner ist besser)</h3>
     <ResponsiveContainer width="100%" height={450}>
-      <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 60 }}>
+      <BarChart data={data} margin={{ top: 20, right: 10, left: 0, bottom: 60 }} tabIndex={-1}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="Brand" angle={-45} textAnchor="end" height={100} />
+        <XAxis dataKey="Brand" angle={-90} textAnchor="end" height={xAxisHeight(data, 'Brand')} interval={0} />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="Sum" fillOpacity={0.35}>
+        <Bar dataKey="Sum" fillOpacity={0.35} tabIndex={-1}>
           {data.map(entry => <Cell key={entry.Brand} fill={entry.fill} stroke={entry.fill} strokeWidth={1.5} />)}
         </Bar>
       </BarChart>
@@ -225,14 +236,14 @@ const BoxPlotChartInner = ({ rawData, raters, aggregated }) => {
   const boxData = computeBoxStats(rawData, raters, aggregated);
   return (
     <div className="chart-container">
-      <h3>Bewertungsverteilung pro Marke</h3>
+      <h3>Bewertungsverteilung pro Produkt</h3>
       <ResponsiveContainer width="100%" height={450}>
-        <BarChart data={boxData} margin={{ top: 20, right: 30, left: 0, bottom: 60 }}>
+        <BarChart data={boxData} margin={{ top: 20, right: 10, left: 0, bottom: 60 }} tabIndex={-1}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="Brand" angle={-45} textAnchor="end" height={100} />
+          <XAxis dataKey="Brand" angle={-90} textAnchor="end" height={xAxisHeight(boxData, 'Brand')} interval={0} />
           <YAxis domain={[0, 10]} />
           <Tooltip content={<BoxPlotTooltip />} />
-          <Bar dataKey="max" shape={BoxPlotShape} isAnimationActive={false} />
+          <Bar dataKey="max" shape={BoxPlotShape} isAnimationActive={false} tabIndex={-1}/>
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -243,12 +254,12 @@ const BarChartDeviationInner = ({ data }) => (
   <div className="chart-container">
     <h3>Bewerter-Abweichung vom Median</h3>
     <ResponsiveContainer width="100%" height={450}>
-      <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 60 }}>
+      <BarChart data={data} margin={{ top: 20, right: 10, left: 0, bottom: 60 }} tabIndex={-1}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="Rater" angle={-45} textAnchor="end" height={100} />
+        <XAxis dataKey="Rater" angle={-90} textAnchor="end" height={xAxisHeight(data, 'Rater')} interval={0} />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="Deviation" fillOpacity={0.35}>
+        <Bar dataKey="Deviation" fillOpacity={0.35} tabIndex={-1}>
           {data.map(entry => <Cell key={entry.Rater} fill={entry.fill} stroke={entry.fill} strokeWidth={1.5} />)}
         </Bar>
       </BarChart>
@@ -270,14 +281,14 @@ const BarChartPriceRatioInner = ({ data }) => {
 
   return (
     <div className="chart-container">
-      <h3>Preis-Leistungs-Verhältnis</h3>
+      <h3>Preis-Leistungs-Verhältnis (kleiner ist besser)</h3>
       <ResponsiveContainer width="100%" height={450}>
-        <BarChart data={withPrice} margin={{ top: 20, right: 30, left: 0, bottom: 60 }}>
+        <BarChart data={withPrice} margin={{ top: 20, right: 10, left: 0, bottom: 60 }} tabIndex={-1}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="Brand" angle={-45} textAnchor="end" height={100} />
+          <XAxis dataKey="Brand" angle={-90} textAnchor="end" height={xAxisHeight(withPrice, 'Brand')} interval={0} />
           <YAxis />
           <Tooltip formatter={v => v.toFixed(2)} />
-          <Bar dataKey="PriceScore" fillOpacity={0.35}>
+          <Bar dataKey="PriceScore" fillOpacity={0.35} tabIndex={-1}>
             {withPrice.map(entry => <Cell key={entry.Brand} fill={entry.fill} stroke={entry.fill} strokeWidth={1.5} />)}
           </Bar>
         </BarChart>
@@ -295,6 +306,11 @@ const chartStyles = `
   .chart-container h3 {
     margin-bottom: 1rem;
     font-size: 1.25rem;
+  }
+  @media (max-width: 720px) {
+    .chart-container {
+      margin-bottom: 1.5rem;
+    }
   }
 `;
 

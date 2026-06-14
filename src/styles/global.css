@@ -36,10 +36,10 @@ body {
 	padding: 0;
 	text-align: left;
 	background-color: #fffaf6;
-	background-image:
+	/* background-image:
 		radial-gradient(circle at top left, rgba(196, 81, 31, 0.12), transparent 32%),
 		radial-gradient(circle at top right, rgba(123, 47, 16, 0.08), transparent 24%),
-		linear-gradient(var(--gray-gradient));
+		linear-gradient(var(--gray-gradient)); */
 	background-size: 100% 600px, 100% 420px, 100% 600px;
 	background-repeat: no-repeat;
 	word-wrap: break-word;

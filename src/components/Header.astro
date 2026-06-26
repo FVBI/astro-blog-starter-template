@@ -9,12 +9,17 @@ import { SITE_TITLE } from '../consts';
 			<a href="/" aria-label={SITE_TITLE}>
 				<img src="/favicon.svg" alt="" aria-hidden="true" width="32" height="32" />
 				<span>{SITE_TITLE}</span>
-				
 			</a>
 		</h2>
+		<button class="hamburger" aria-label="Menü öffnen" aria-expanded="false">
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
 		<div class="internal-links">
 			<HeaderLink href="/">Start</HeaderLink>
 			<HeaderLink href="/tastings">Tastings</HeaderLink>
+			<HeaderLink href="/wortkarten">Wortkarten</HeaderLink>
 			<HeaderLink href="/about">Über uns</HeaderLink>
 		</div>
 		<div class="social-links">
@@ -30,18 +35,20 @@ import { SITE_TITLE } from '../consts';
 		</div>
 	</nav>
 </header>
+
 <style>
 	header {
 		margin: 0;
 		padding: 0 1em;
 		background: white;
 		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		position: relative;
+		z-index: 100;
 	}
 	h2 {
 		margin: 0;
 		font-size: 1em;
 	}
-
 	h2 a,
 	h2 a.active {
 		text-decoration: none;
@@ -73,9 +80,81 @@ import { SITE_TITLE } from '../consts';
 	.social-links a {
 		display: flex;
 	}
+
+	/* Hamburger button — hidden on desktop */
+	.hamburger {
+		display: none;
+		flex-direction: column;
+		justify-content: center;
+		gap: 5px;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0.5rem;
+		margin-left: auto;
+	}
+	.hamburger span {
+		display: block;
+		width: 24px;
+		height: 2px;
+		background: rgb(var(--black));
+		border-radius: 2px;
+		transition: transform 0.2s ease, opacity 0.2s ease;
+	}
+	.hamburger[aria-expanded="true"] span:nth-child(1) {
+		transform: translateY(7px) rotate(45deg);
+	}
+	.hamburger[aria-expanded="true"] span:nth-child(2) {
+		opacity: 0;
+	}
+	.hamburger[aria-expanded="true"] span:nth-child(3) {
+		transform: translateY(-7px) rotate(-45deg);
+	}
+
 	@media (max-width: 720px) {
+		.hamburger {
+			display: flex;
+		}
 		.social-links {
 			display: none;
 		}
+		.internal-links {
+			display: none;
+			flex-direction: column;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			background: white;
+			box-shadow: 0 4px 12px rgba(var(--black), 10%);
+			padding: 0.5rem 1rem 1rem;
+		}
+		.internal-links.open {
+			display: flex;
+		}
+		.internal-links a {
+			padding: 0.75em 0.5em;
+			border-bottom: 1px solid rgba(var(--gray-light), 1);
+		}
+		.internal-links a:last-child {
+			border-bottom: none;
+		}
 	}
 </style>
+
+<script>
+	const btn = document.querySelector('.hamburger') as HTMLButtonElement;
+	const links = document.querySelector('.internal-links') as HTMLElement;
+
+	btn.addEventListener('click', () => {
+		const open = links.classList.toggle('open');
+		btn.setAttribute('aria-expanded', String(open));
+	});
+
+	links.querySelectorAll('a').forEach(a => {
+		a.addEventListener('click', () => {
+			links.classList.remove('open');
+			btn.setAttribute('aria-expanded', 'false');
+		});
+	});
+</script>

@@ -1,0 +1,145 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+import keywords from '../data/wortkarten.json';
+
+const CATEGORY_COLORS: Record<string, { bg: string; border: string; text: string }> = {
+  Mundgefühl: { bg: '#e8f4fb', border: '#88CCEE', text: '#1a5a7a' },
+  Geschmack:  { bg: '#fdf6e0', border: '#DDCC77', text: '#7a6010' },
+  Aroma:      { bg: '#e5f5f2', border: '#44AA99', text: '#1a5a50' },
+  Aussehen:   { bg: '#fceaec', border: '#CC6677', text: '#7a1a28' },
+};
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <BaseHead title={`Wortkarten – ${SITE_TITLE}`} description="Vokabular für deine Verkostung" />
+    <style>
+      main {
+        padding-bottom: 3rem;
+      }
+      h1 {
+        margin-bottom: 0.25rem;
+      }
+      .subtitle {
+        color: rgb(var(--gray));
+        margin-bottom: 1.5rem;
+        margin-top: 0;
+      }
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+      .legend-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      #keyword-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.75rem;
+      }
+      .tile {
+        border-radius: 10px;
+        border-width: 2px;
+        border-style: solid;
+        padding: 0.75rem 0.5rem;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.95rem;
+        line-height: 1.2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        min-height: 60px;
+      }
+      .tile-dots {
+        display: flex;
+        gap: 3px;
+      }
+      .tile-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      @media (max-width: 720px) {
+        #keyword-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.5rem;
+        }
+        .tile {
+          font-size: 0.85rem;
+          min-height: 54px;
+          padding: 0.6rem 0.4rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <h1>Wortkarten</h1>
+      <p class="subtitle">Vokabular für deine Verkostung.</p>
+
+      <div class="legend">
+        {Object.entries(CATEGORY_COLORS).map(([cat, colors]) => (
+          <span class="legend-item">
+            <span class="legend-dot" style={`background: ${colors.border}`}></span>
+            {cat}
+          </span>
+        ))}
+      </div>
+
+      <div id="keyword-grid">
+        {keywords.map((kw) => {
+          const primary = CATEGORY_COLORS[kw.categories[0]];
+          return (
+            <div
+              class="tile"
+              style={`background: ${primary.bg}; border-color: ${primary.border}; color: ${primary.text};`}
+            >
+              {kw.word}
+              {kw.categories.length > 1 && (
+                <span class="tile-dots">
+                  {kw.categories.map(cat => (
+                    <span class="tile-dot" style={`background: ${CATEGORY_COLORS[cat].border}`}></span>
+                  ))}
+                </span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </main>
+    <Footer />
+
+    <script>
+      const grid = document.getElementById('keyword-grid');
+      if (grid) {
+        const tiles = [...grid.children] as HTMLElement[];
+        for (let i = tiles.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+        }
+        tiles.forEach(tile => grid.appendChild(tile));
+      }
+    </script>
+  </body>
+</html>

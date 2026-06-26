@@ -1,0 +1,517 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { ViewTransitions } from 'astro:transitions';
+import { recipes, bookGradient, bookCover } from '../../lib/recipes';
+
+export function getStaticPaths() {
+  return recipes.map(r => ({
+    params: { id: r.id },
+    props:  { recipe: r },
+  }));
+}
+
+const { recipe } = Astro.props;
+const gradient = bookGradient(recipe.book);
+const cover = bookCover(recipe.book);
+const allIds = recipes.map(r => r.id);
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <BaseHead
+      title={recipe.name}
+      description={`${recipe.book} – Seite ${recipe.page}`}
+    />
+    <ViewTransitions />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .reel-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        gap: 1.25rem;
+      }
+
+      .card-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+      }
+
+      .nav-btn {
+        flex-shrink: 0;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        border: 1.5px solid rgb(var(--gray-light));
+        background: white;
+        color: rgb(var(--gray-dark));
+        font-size: 1.1rem;
+        cursor: pointer;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        transition: border-color 0.15s, color 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: inherit;
+      }
+      .nav-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+      .nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+      /* DIN A card — 210 ∶ 297 */
+      .recipe-card {
+        height: min(62vh, 480px);
+        aspect-ratio: 210 / 297;
+        border-radius: 12px;
+        box-shadow: var(--box-shadow);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        color: white;
+      }
+
+      .recipe-name {
+        margin: 0 0 0.75rem;
+        font-size: clamp(1rem, 2.5vw, 1.6rem);
+        font-weight: 700;
+        line-height: 1.25;
+        color: white;
+      }
+
+      .divider {
+        width: 2rem;
+        height: 2px;
+        background: rgba(255,255,255,0.4);
+        border-radius: 2px;
+        margin: 0 auto 0.75rem;
+      }
+
+      .book-name {
+        margin: 0 0 0.3rem;
+        font-size: 0.78rem;
+        opacity: 0.75;
+        line-height: 1.4;
+        color: white;
+      }
+
+      .page-num {
+        margin: 0;
+        font-size: 0.75rem;
+        opacity: 0.5;
+        color: white;
+      }
+
+      /* Filter toggle button */
+      .filter-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: none;
+        border: 1px solid rgb(var(--gray-light));
+        border-radius: 6px;
+        padding: 0.35rem 0.8rem;
+        font-size: 0.8rem;
+        color: rgb(var(--gray));
+        cursor: pointer;
+        font-family: inherit;
+        transition: color 0.15s, border-color 0.15s;
+      }
+      .filter-btn:hover { color: rgb(var(--gray-dark)); border-color: rgb(var(--gray)); }
+
+      /* Filter dialog */
+      dialog {
+        border: none;
+        border-radius: 12px;
+        padding: 0;
+        max-width: 600px;
+        width: calc(100% - 1.5rem);
+        height: min(56vh, 460px);
+        overflow: hidden;
+        flex-direction: column;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      }
+      dialog[open] {
+        display: flex;
+      }
+      dialog::backdrop { background: rgba(0,0,0,0.35); }
+
+      .dialog-body {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        padding: 1.5rem 1.5rem 0;
+      }
+      .dialog-body h2 {
+        margin: 0 0 1.25rem;
+        font-size: 1.1rem;
+      }
+
+      :global(.filter-group) {
+        padding-bottom: 1.25rem;
+        margin-bottom: 1.25rem;
+        border-bottom: 1px solid rgb(var(--gray-light));
+      }
+      :global(.filter-group:last-child) {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+      :global(.filter-group-label) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        list-style: none;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgb(var(--gray));
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        user-select: none;
+      }
+      :global(.filter-group-label::-webkit-details-marker) { display: none; }
+      :global(.filter-group-label::after) {
+        content: '▾';
+        font-size: 0.9rem;
+        transition: transform 0.2s;
+      }
+      :global(.filter-group:not([open]) .filter-group-label::after) {
+        transform: rotate(-90deg);
+      }
+      :global(.filter-group:not([open]) .filter-options) {
+        display: none;
+      }
+      :global(.filter-options) {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      :global(.filter-chip) {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: none;
+        border: none;
+        padding: 0.2rem 0;
+        font-size: 0.85rem;
+        cursor: pointer;
+        font-family: inherit;
+        color: rgb(var(--gray-dark));
+        transition: color 0.12s;
+      }
+      :global(.filter-chip input) {
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        flex-shrink: 0;
+        accent-color: var(--accent);
+        cursor: pointer;
+      }
+      :global(.filter-chip:has(input:checked)) {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .dialog-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.5rem;
+        border-top: 1px solid rgb(var(--gray-light));
+        flex-shrink: 0;
+      }
+      .count-label {
+        font-size: 0.82rem;
+        color: rgb(var(--gray));
+      }
+      .dialog-actions { display: flex; gap: 0.5rem; }
+      .btn-apply {
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 0.45rem 1rem;
+        font-size: 0.85rem;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 600;
+        transition: background 0.15s;
+      }
+      .btn-apply:hover { background: var(--accent-dark); }
+      .btn-close {
+        background: none;
+        border: 1px solid rgb(var(--gray-light));
+        border-radius: 6px;
+        padding: 0.45rem 0.85rem;
+        font-size: 0.85rem;
+        cursor: pointer;
+        font-family: inherit;
+        color: rgb(var(--gray-dark));
+      }
+
+      @media (max-width: 600px) {
+        .card-row { gap: 0.75rem; }
+        .nav-btn { width: 2.5rem; height: 2.5rem; font-size: 1rem; }
+        .recipe-card { height: auto; width: calc(100vw - 8rem); }
+        .reel-area { padding: 1.25rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+
+    <div class="reel-area">
+      <div class="card-row">
+        <button class="nav-btn" id="prev-btn" disabled aria-label="Vorheriges Rezept">←</button>
+
+        <div
+          class="recipe-card"
+          style={`background: ${gradient}; background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('${cover}'); background-size: cover; background-position: center;`}
+          transition:name="recipe-card"
+          transition:animate="fade"
+          data-recipe-id={recipe.id}
+          data-all-ids={JSON.stringify(allIds)}
+        >
+          <h1 class="recipe-name">{recipe.name}</h1>
+          <div class="divider"></div>
+          <p class="book-name">{recipe.book}</p>
+          <p class="page-num">Seite {recipe.page}</p>
+        </div>
+
+        <button class="nav-btn" id="next-btn" disabled aria-label="Nächstes Rezept">→</button>
+      </div>
+
+      <button class="filter-btn" id="filter-btn" aria-label="Auswahl filtern">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+        </svg>
+        Filter
+      </button>
+    </div>
+
+    <!-- Filter dialog -->
+    <dialog id="filter-dialog" aria-label="Rezepte filtern">
+      <div class="dialog-body">
+        <h2>Rezepte filtern</h2>
+        <div id="filter-groups">
+          <p style="color: rgb(var(--gray)); font-size: 0.9rem;">Wird geladen…</p>
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <span class="count-label" id="filter-count"></span>
+        <div class="dialog-actions">
+          <button class="btn-close" id="filter-close">Abbrechen</button>
+          <button class="btn-apply" id="filter-apply">Anwenden</button>
+        </div>
+      </div>
+    </dialog>
+
+    <Footer />
+
+    <script>
+      import { navigate } from 'astro:transitions/client';
+
+      type FilterData = {
+        books: Record<string, string[]>;
+        diets: Record<string, string[]>;
+        kitchens: Record<string, string[]>;
+      };
+
+      let controller = new AbortController();
+      let cachedFilterData: FilterData | null = null;
+
+      document.addEventListener('astro:page-load', () => {
+        controller.abort();
+        controller = new AbortController();
+        const { signal } = controller;
+
+        const card = document.querySelector('[data-recipe-id]') as HTMLElement;
+        if (!card) return;
+
+        const recipeId = card.dataset.recipeId!;
+        const allIds: string[] = JSON.parse(card.dataset.allIds!);
+
+        // Establish or restore session
+        let order: string[] = JSON.parse(sessionStorage.getItem('reelOrder') || '[]');
+        if (order.length === 0 || !order.includes(recipeId)) {
+          const shuffled = [...allIds].sort(() => Math.random() - 0.5);
+          const pos = shuffled.indexOf(recipeId);
+          if (pos > 0) { shuffled.splice(pos, 1); shuffled.unshift(recipeId); }
+          order = shuffled;
+          sessionStorage.setItem('reelOrder', JSON.stringify(order));
+        }
+
+        const idx  = order.indexOf(recipeId);
+        const prev = idx > 0                ? order[idx - 1] : null;
+        const next = idx < order.length - 1 ? order[idx + 1] : null;
+
+        const prevBtn = document.getElementById('prev-btn') as HTMLButtonElement;
+        const nextBtn = document.getElementById('next-btn') as HTMLButtonElement;
+
+        if (prev) { prevBtn.disabled = false; prevBtn.onclick = () => navigate(`/rezepte/${prev}`); }
+        if (next) { nextBtn.disabled = false; nextBtn.onclick = () => navigate(`/rezepte/${next}`); }
+
+        // Prefetch neighbours
+        [prev, next].filter(Boolean).forEach(id => {
+          const link = document.createElement('link');
+          link.rel = 'prefetch';
+          link.href = `/rezepte/${id}`;
+          document.head.appendChild(link);
+        });
+
+        // Keyboard
+        document.addEventListener('keydown', (e) => {
+          if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && next) {
+            e.preventDefault(); navigate(`/rezepte/${next}`);
+          } else if ((e.key === 'ArrowLeft' || e.key === 'ArrowUp') && prev) {
+            e.preventDefault(); navigate(`/rezepte/${prev}`);
+          }
+        }, { signal });
+
+        // Swipe
+        let startY = 0, startX = 0;
+        document.addEventListener('touchstart', (e) => {
+          startY = e.touches[0].clientY;
+          startX = e.touches[0].clientX;
+        }, { passive: true, signal });
+        document.addEventListener('touchend', (e) => {
+          const dy = startY - e.changedTouches[0].clientY;
+          const dx = Math.abs(startX - e.changedTouches[0].clientX);
+          if (Math.abs(dy) > 50 && Math.abs(dy) > dx * 1.5) {
+            if (dy > 0 && next) navigate(`/rezepte/${next}`);
+            if (dy < 0 && prev) navigate(`/rezepte/${prev}`);
+          }
+        }, { passive: true, signal });
+
+        // ── Filter modal ──────────────────────────────────────────
+        const filterBtn   = document.getElementById('filter-btn')!;
+        const dialog      = document.getElementById('filter-dialog') as HTMLDialogElement;
+        const closeBtn    = document.getElementById('filter-close')!;
+        const applyBtn    = document.getElementById('filter-apply')!;
+        const countLabel  = document.getElementById('filter-count')!;
+        const groupsEl    = document.getElementById('filter-groups')!;
+
+        function computeCount(fd: FilterData, books: string[], diets: string[], kitchens: string[]) {
+          let eligible = new Set(allIds);
+          if (books.length) {
+            const s = new Set(books.flatMap(b => fd.books[b] ?? []));
+            eligible = new Set([...eligible].filter(id => s.has(id)));
+          }
+          if (diets.length) {
+            const s = new Set(diets.flatMap(d => fd.diets[d] ?? []));
+            eligible = new Set([...eligible].filter(id => s.has(id)));
+          }
+          if (kitchens.length) {
+            const s = new Set(kitchens.flatMap(k => fd.kitchens[k] ?? []));
+            eligible = new Set([...eligible].filter(id => s.has(id)));
+          }
+          return eligible.size;
+        }
+
+        function updateCount(fd: FilterData) {
+          const checked = (key: string) =>
+            [...groupsEl.querySelectorAll<HTMLInputElement>(`[data-group="${key}"] input:checked`)]
+              .map(el => el.value);
+          const count = computeCount(fd, checked('books'), checked('diets'), checked('kitchens'));
+          countLabel.textContent = `${count} Rezepte`;
+        }
+
+        function buildGroups(fd: FilterData) {
+          const saved: { books: string[]; diets: string[]; kitchens: string[] } =
+            JSON.parse(sessionStorage.getItem('reelFilter') || '{"books":[],"diets":[],"kitchens":[]}');
+
+          const shortenBook = (full: string) => {
+            const title = full.includes(' - ') ? full.split(' - ').slice(1).join(' - ') : full;
+            return title.length > 30 ? title.slice(0, 28) + '…' : title;
+          };
+
+          const makeGroup = (label: string, key: string, options: string[], selected: string[], displayFn = (s: string) => s) => {
+            const div = document.createElement('details');
+            div.className = 'filter-group';
+            div.open = true;
+            div.innerHTML = `<summary class="filter-group-label">${label}</summary><div class="filter-options" data-group="${key}"></div>`;
+            const wrap = div.querySelector('.filter-options')!;
+            options.forEach(opt => {
+              const chip = document.createElement('label');
+              chip.className = 'filter-chip';
+              chip.title = opt;
+              const cb = document.createElement('input');
+              cb.type = 'checkbox';
+              cb.value = opt;
+              cb.checked = selected.includes(opt);
+              cb.addEventListener('change', () => updateCount(fd));
+              chip.appendChild(cb);
+              chip.appendChild(document.createTextNode(displayFn(opt)));
+              wrap.appendChild(chip);
+            });
+            return div;
+          };
+
+          groupsEl.innerHTML = '';
+          groupsEl.appendChild(makeGroup('Bücher',      'books',    Object.keys(fd.books),    saved.books, shortenBook));
+          groupsEl.appendChild(makeGroup('Ernährung',   'diets',    Object.keys(fd.diets),    saved.diets));
+          groupsEl.appendChild(makeGroup('Kategorie',   'kitchens', Object.keys(fd.kitchens), saved.kitchens));
+          updateCount(fd);
+        }
+
+        filterBtn.addEventListener('click', async () => {
+          if (!cachedFilterData) {
+            groupsEl.innerHTML = '<p style="color:rgb(var(--gray));font-size:0.9rem">Wird geladen…</p>';
+            cachedFilterData = await fetch('/rezepte/filter-data.json').then(r => r.json());
+          }
+          buildGroups(cachedFilterData!);
+          dialog.showModal();
+        }, { signal });
+
+        closeBtn.addEventListener('click', () => dialog.close(), { signal });
+        dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); }, { signal });
+
+        applyBtn.addEventListener('click', () => {
+          const fd = cachedFilterData!;
+          const checked = (key: string) =>
+            [...groupsEl.querySelectorAll<HTMLInputElement>(`[data-group="${key}"] input:checked`)]
+              .map(el => el.value);
+          const selBooks    = checked('books');
+          const selDiets    = checked('diets');
+          const selKitchens = checked('kitchens');
+
+          sessionStorage.setItem('reelFilter', JSON.stringify({ books: selBooks, diets: selDiets, kitchens: selKitchens }));
+
+          let eligible = new Set(allIds);
+          if (selBooks.length) {
+            const s = new Set(selBooks.flatMap(b => fd.books[b] ?? []));
+            eligible = new Set([...eligible].filter(id => s.has(id)));
+          }
+          if (selDiets.length) {
+            const s = new Set(selDiets.flatMap(d => fd.diets[d] ?? []));
+            eligible = new Set([...eligible].filter(id => s.has(id)));
+          }
+          if (selKitchens.length) {
+            const s = new Set(selKitchens.flatMap(k => fd.kitchens[k] ?? []));
+            eligible = new Set([...eligible].filter(id => s.has(id)));
+          }
+
+          const shuffled = [...eligible].sort(() => Math.random() - 0.5);
+          sessionStorage.setItem('reelOrder', JSON.stringify(shuffled));
+          dialog.close();
+          navigate(`/rezepte/${shuffled[0]}`);
+        }, { signal });
+      });
+    </script>
+  </body>
+</html>

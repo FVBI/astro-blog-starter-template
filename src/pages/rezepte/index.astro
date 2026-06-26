@@ -1,0 +1,27 @@
+---
+import { recipes } from '../../lib/recipes';
+const allIds = recipes.map(r => r.id);
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Rezepte</title>
+    <style>body { margin: 0; background: #fffaf6; }</style>
+  </head>
+  <body>
+    <script define:vars={{ allIds }}>
+      const shuffled = [...allIds].sort(() => Math.random() - 0.5);
+      sessionStorage.setItem('reelOrder', JSON.stringify(shuffled));
+      sessionStorage.removeItem('reelFilter');
+      window.location.replace(`/rezepte/${shuffled[0]}`);
+    </script>
+    <noscript>
+      <p style="font-family:sans-serif;padding:2rem">
+        Bitte JavaScript aktivieren. <a href={`/rezepte/${allIds[0]}`}>Zum ersten Rezept →</a>
+      </p>
+    </noscript>
+  </body>
+</html>

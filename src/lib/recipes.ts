@@ -34,9 +34,28 @@ export function bookGradient(book: string): string {
   return `linear-gradient(160deg, ${from}, ${to})`;
 }
 
-export function bookCover(book: string): string {
-  return `/bookcovers/${book}.jpg`;
+const PALETTE: [string, string][] = [
+  ['#d4883f', '#8c4d1a'],
+  ['#c94030', '#7a1a10'],
+  ['#3a9e6a', '#1a5a35'],
+  ['#3a6090', '#1a2f50'],
+  ['#9050b0', '#4a1a70'],
+  ['#c0784a', '#7a3a1a'],
+  ['#4a90a0', '#1a4a5a'],
+  ['#b05070', '#6a1a30'],
+  ['#6a8a30', '#3a5010'],
+  ['#8a5030', '#4a2010'],
+];
+
+export function recipeGradient(id: string): string {
+  const index = parseInt(id, 10) % PALETTE.length;
+  const [from, to] = PALETTE[index];
+  return `linear-gradient(160deg, ${from}, ${to})`;
 }
+
+// export function bookCover(book: string): string {
+//   return `/bookcovers/${book}.jpg`;
+// }
 
 function parse(text: string): Recipe[] {
   const lines = text.split('\n').filter(l => l.trim());

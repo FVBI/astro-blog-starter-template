@@ -3,7 +3,7 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { ViewTransitions } from 'astro:transitions';
-import { recipes, bookGradient, bookCover } from '../../lib/recipes';
+import { recipes, recipeGradient/*, bookCover*/ } from '../../lib/recipes';
 
 export function getStaticPaths() {
   return recipes.map(r => ({
@@ -13,8 +13,8 @@ export function getStaticPaths() {
 }
 
 const { recipe } = Astro.props;
-const gradient = bookGradient(recipe.book);
-const cover = bookCover(recipe.book);
+const gradient = recipeGradient(recipe.id);
+// const cover = bookCover(recipe.book);
 const allIds = recipes.map(r => r.id);
 ---
 
@@ -281,7 +281,7 @@ const allIds = recipes.map(r => r.id);
 
         <div
           class="recipe-card"
-          style={`background: ${gradient}; background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('${cover}'); background-size: cover; background-position: center;`}
+          style={`background: ${gradient};`}
           transition:name="recipe-card"
           transition:animate="fade"
           data-recipe-id={recipe.id}

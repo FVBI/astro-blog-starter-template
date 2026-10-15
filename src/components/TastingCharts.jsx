@@ -46,7 +46,7 @@ const getCSV = () => {
 const getRaterCols = (data) => {
   if (data.length === 0) return [];
   const metaCols = new Set(['Date', 'Number', 'Subject', 'ID', 'Symbol', 'Brand', 'Price', 'Comment', 'Average', '⌀', 'Sum']);
-  return Object.keys(data[0]).filter(col => !metaCols.has(col) && typeof data[0][col] === 'number');
+  return Object.keys(data[0]).filter(col => !metaCols.has(col) && data.some(row => typeof row[col] === 'number'));
 };
 
 const filterBySubject = (data, subject) =>
@@ -161,11 +161,47 @@ const useTastingData = (subject) => {
   return state;
 };
 
-// Estimate XAxis height from the longest label (~7px per character at 12px font)
+// Wrap a label into lines of at most maxChars characters (breaking at spaces/hyphens)
+const WRAP_CHARS = 16;
+const LINE_HEIGHT = 13;
+const wrapLabel = (text, maxChars = WRAP_CHARS) => {
+  const words = String(text ?? '').split(/(?<=[\s-])/);
+  const lines = [];
+  let current = '';
+  words.forEach(word => {
+    if (current && (current + word).trim().length > maxChars) {
+      lines.push(current.trim());
+      current = word;
+    } else {
+      current += word;
+    }
+  });
+  if (current.trim()) lines.push(current.trim());
+  return lines;
+};
+
+// Rotated (-60°) multi-line tick
+const AngledTick = ({ x, y, payload }) => {
+  const lines = wrapLabel(payload.value);
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text transform="rotate(-60)" textAnchor="end" fontSize={12} fill="#666">
+        {lines.map((line, i) => (
+          <tspan key={i} x={0} dy={i === 0 ? -((lines.length - 1) * LINE_HEIGHT) / 2 + 4 : LINE_HEIGHT}>{line}</tspan>
+        ))}
+      </text>
+    </g>
+  );
+};
+
+// Estimate XAxis height from the longest wrapped line and line count
 const xAxisHeight = (items, key) => {
   if (!items.length) return 120;
-  const longest = Math.max(...items.map(d => String(d[key] ?? '').length));
-  return Math.max(longest * 7, 60);
+  const wrapped = items.map(d => wrapLabel(d[key]));
+  const maxLen = Math.max(...wrapped.map(l => Math.max(...l.map(t => t.length), 0)));
+  const maxLines = Math.max(...wrapped.map(l => l.length));
+  const rad = Math.PI / 3;
+  return Math.ceil(maxLen * 6.5 * Math.sin(rad) + maxLines * LINE_HEIGHT * Math.cos(rad) + 15);
 };
 
 // --- Internal chart renderers ---
@@ -176,7 +212,7 @@ const BarChartSum = ({ data }) => (
     <ResponsiveContainer width="100%" height={450}>
       <BarChart data={data} margin={{ top: 20, right: 10, left: 0, bottom: 60 }} tabIndex={-1}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="Brand" angle={-90} textAnchor="end" height={xAxisHeight(data, 'Brand')} interval={0} />
+        <XAxis dataKey="Brand" tick={<AngledTick />} height={xAxisHeight(data, 'Brand')} interval={0} />
         <YAxis />
         <Tooltip />
         <Bar dataKey="Sum" fillOpacity={0.35} tabIndex={-1}>
@@ -240,7 +276,7 @@ const BoxPlotChartInner = ({ rawData, raters, aggregated }) => {
       <ResponsiveContainer width="100%" height={450}>
         <BarChart data={boxData} margin={{ top: 20, right: 10, left: 0, bottom: 60 }} tabIndex={-1}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="Brand" angle={-90} textAnchor="end" height={xAxisHeight(boxData, 'Brand')} interval={0} />
+          <XAxis dataKey="Brand" tick={<AngledTick />} height={xAxisHeight(boxData, 'Brand')} interval={0} />
           <YAxis domain={[0, 10]} />
           <Tooltip content={<BoxPlotTooltip />} />
           <Bar dataKey="max" shape={BoxPlotShape} isAnimationActive={false} tabIndex={-1}/>
@@ -256,7 +292,7 @@ const BarChartDeviationInner = ({ data }) => (
     <ResponsiveContainer width="100%" height={450}>
       <BarChart data={data} margin={{ top: 20, right: 10, left: 0, bottom: 60 }} tabIndex={-1}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="Rater" angle={-90} textAnchor="end" height={xAxisHeight(data, 'Rater')} interval={0} />
+        <XAxis dataKey="Rater" tick={<AngledTick />} height={xAxisHeight(data, 'Rater')} interval={0} />
         <YAxis />
         <Tooltip />
         <Bar dataKey="Deviation" fillOpacity={0.35} tabIndex={-1}>
@@ -285,7 +321,7 @@ const BarChartPriceRatioInner = ({ data }) => {
       <ResponsiveContainer width="100%" height={450}>
         <BarChart data={withPrice} margin={{ top: 20, right: 10, left: 0, bottom: 60 }} tabIndex={-1}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="Brand" angle={-90} textAnchor="end" height={xAxisHeight(withPrice, 'Brand')} interval={0} />
+          <XAxis dataKey="Brand" tick={<AngledTick />} height={xAxisHeight(withPrice, 'Brand')} interval={0} />
           <YAxis />
           <Tooltip formatter={v => v.toFixed(2)} />
           <Bar dataKey="PriceScore" fillOpacity={0.35} tabIndex={-1}>
